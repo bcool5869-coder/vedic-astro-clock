@@ -224,15 +224,15 @@ function buildWheel(svgEl, planets, chartType) {
   svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_NI,fill:"none",stroke:"#a78bfa","stroke-width":"1"}));
 
   // ════════ RING 3: PADA TICKS (134 → 118) ════════
-  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_PDO,fill:"none",stroke:"#c4b5fd","stroke-width":"0.7"}));
-  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_PDI,fill:"none",stroke:"#c4b5fd","stroke-width":"0.7"}));
+  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_PDO,fill:"none",stroke:"#000000","stroke-width":"0.7"}));
+  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_PDI,fill:"none",stroke:"#000000","stroke-width":"0.7"}));
   for (let i = 0; i < 108; i++) {
     const a = lonToAngle(i*(360/108));
     const isNak = i%4===0, isSign = i%9===0;
     const p1=P(isNak ? R_PDI : R_PDI+5, a), p2=P(R_PDO,a);
     svgEl.appendChild(E("line",{x1:p1.x,y1:p1.y,x2:p2.x,y2:p2.y,
-      stroke: isSign?"#7c3aed": isNak?"#a78bfa":"#ddd8fe",
-      "stroke-width": isNak?"0.9":"0.5"}));
+      stroke:"#000000",
+      "stroke-width": isSign?"1.2": isNak?"0.8":"0.4"}));
   }
 
   // ── Inner white area
