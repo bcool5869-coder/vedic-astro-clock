@@ -106,18 +106,17 @@ main {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 20px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  min-width: 520px;
+  gap: 8px;
 }
 
 .chart-card svg {
   width: 100%;
   height: auto;
-  max-width: 500px;
+  max-width: 560px;
 }
 
 .chart-card h2 {
