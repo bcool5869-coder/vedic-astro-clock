@@ -152,19 +152,19 @@ function lonToAngle(lon)   { return -90 + lon; }
 function signMidAngle(i)   { return lonToAngle(i*30 + 15); }
 function nakMidAngle(i)    { return lonToAngle(i*(360/27) + (360/54)); }
 
-// Sign element colors (fire/earth/air/water cycling)
+// Sign element colors on white background (fire/earth/air/water)
 const SIGN_COLORS = [
-  "rgba(239,68,68,0.15)",  "rgba(34,197,94,0.10)", "rgba(96,165,250,0.13)", "rgba(167,139,250,0.12)",
-  "rgba(239,68,68,0.10)",  "rgba(34,197,94,0.08)", "rgba(96,165,250,0.10)", "rgba(167,139,250,0.09)",
-  "rgba(239,68,68,0.13)",  "rgba(34,197,94,0.10)", "rgba(96,165,250,0.12)", "rgba(167,139,250,0.11)"
+  "rgba(239,68,68,0.18)",  "rgba(34,197,94,0.14)", "rgba(96,165,250,0.18)", "rgba(167,139,250,0.16)",
+  "rgba(239,68,68,0.13)",  "rgba(34,197,94,0.10)", "rgba(96,165,250,0.13)", "rgba(167,139,250,0.12)",
+  "rgba(239,68,68,0.18)",  "rgba(34,197,94,0.14)", "rgba(96,165,250,0.18)", "rgba(167,139,250,0.16)"
 ];
-const NAK_COLORS = ["rgba(124,58,237,0.10)","rgba(168,85,247,0.05)"];
+const NAK_COLORS = ["rgba(99,102,241,0.10)","rgba(139,92,246,0.05)"];
 
 function buildWheel(svgEl, planets, chartType) {
   while (svgEl.firstChild) svgEl.removeChild(svgEl.firstChild);
 
   // ── Outer background
-  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_SO, fill:"#07071a",stroke:"#3a3a6a","stroke-width":"1.5"}));
+  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_SO, fill:"#ffffff",stroke:"#c4b5fd","stroke-width":"1.5"}));
 
   // ════════════════════════════════════════════════
   // RING 1: SIGN RING  (240 → 195)
@@ -178,16 +178,16 @@ function buildWheel(svgEl, planets, chartType) {
     // boundary spokes (full height from nak ring to outer)
     const p1=P(R_NI,sa), p2=P(R_SO,sa);
     svgEl.appendChild(E("line",{ x1:p1.x,y1:p1.y, x2:p2.x,y2:p2.y,
-      stroke:"#4a4a8a","stroke-width":"1.5" }));
+      stroke:"#7c3aed","stroke-width":"1.5" }));
 
     // sign glyph — larger
     const gp = P((R_SI+R_SO)/2, signMidAngle(i));
     svgEl.appendChild(E("text",{ x:gp.x,y:gp.y,
-      fill:"#c084fc","font-size":"20","text-anchor":"middle","dominant-baseline":"middle"
+      fill:"#6d28d9","font-size":"20","text-anchor":"middle","dominant-baseline":"middle"
     }, SIGN_GLYPHS[i]));
   }
   // Ring separator
-  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_SI,fill:"none",stroke:"#4a4a8a","stroke-width":"1.2"}));
+  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_SI,fill:"none",stroke:"#7c3aed","stroke-width":"1.2"}));
 
   // ════════════════════════════════════════════════
   // RING 2: NAKSHATRA RING  (195 → 148)
@@ -203,22 +203,22 @@ function buildWheel(svgEl, planets, chartType) {
     // boundary spoke
     const p1=P(R_NI,sa), p2=P(R_NO,sa);
     svgEl.appendChild(E("line",{ x1:p1.x,y1:p1.y, x2:p2.x,y2:p2.y,
-      stroke:"#2e2e6a","stroke-width":"0.8" }));
+      stroke:"#a78bfa","stroke-width":"0.8" }));
 
-    // nakshatra number — bold and bright
+    // nakshatra number — bold and dark on white
     const np = P((R_NI+R_NO)/2, nakMidAngle(i));
     svgEl.appendChild(E("text",{ x:np.x,y:np.y,
-      fill:"#93c5fd","font-size":"11","font-weight":"700",
+      fill:"#1e1b4b","font-size":"11","font-weight":"700",
       "text-anchor":"middle","dominant-baseline":"middle"
     }, String(i+1)));
   }
-  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_NI,fill:"none",stroke:"#2e2e6a","stroke-width":"1"}));
+  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_NI,fill:"none",stroke:"#a78bfa","stroke-width":"1"}));
 
   // ════════════════════════════════════════════════
   // RING 3: PADA TICK RING  (148 → 130)
   // ════════════════════════════════════════════════
-  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_PDO,fill:"none",stroke:"#1e1e4a","stroke-width":"0.8"}));
-  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_PDI,fill:"none",stroke:"#1e1e4a","stroke-width":"0.8"}));
+  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_PDO,fill:"none",stroke:"#c4b5fd","stroke-width":"0.8"}));
+  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_PDI,fill:"none",stroke:"#c4b5fd","stroke-width":"0.8"}));
 
   const PADA_DEG = 360/108;
   for (let i = 0; i < 108; i++) {
@@ -230,23 +230,23 @@ function buildWheel(svgEl, planets, chartType) {
     const p1=P(r1,a), p2=P(r2,a);
     svgEl.appendChild(E("line",{
       x1:p1.x,y1:p1.y, x2:p2.x,y2:p2.y,
-      stroke: isSignBound ? "#5a5a9a" : isNakBound ? "#3a3a7a" : "#1e1e4a",
+      stroke: isSignBound ? "#7c3aed" : isNakBound ? "#a78bfa" : "#c4b5fd",
       "stroke-width": isNakBound ? "1" : "0.5"
     }));
   }
 
-  // ── Inner background (planet area)
-  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_PDI,fill:"#060614",stroke:"none"}));
+  // ── Inner background (planet area) — white
+  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_PDI,fill:"#ffffff",stroke:"none"}));
 
   // Dashed orbit ring
   svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_PLT+12,fill:"none",
-    stroke:"#111130","stroke-width":"0.6","stroke-dasharray":"3,6"}));
+    stroke:"#e0d7ff","stroke-width":"0.6","stroke-dasharray":"3,6"}));
 
   // ════════════════════════════════════════════════
   // CENTER
   // ════════════════════════════════════════════════
-  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_CTR,fill:"#040410",stroke:"#3a3a6a","stroke-width":"1.2"}));
-  svgEl.appendChild(E("text",{x:CX,y:CY,fill:"#a855f7","font-size":"13","font-weight":"800",
+  svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_CTR,fill:"#f3f0ff",stroke:"#7c3aed","stroke-width":"1.2"}));
+  svgEl.appendChild(E("text",{x:CX,y:CY,fill:"#6d28d9","font-size":"13","font-weight":"800",
     "text-anchor":"middle","dominant-baseline":"middle","letter-spacing":"2"}, chartType));
 
   // ════════════════════════════════════════════════
@@ -277,7 +277,7 @@ function buildWheel(svgEl, planets, chartType) {
       // outer glow
       svgEl.appendChild(E("circle",{cx:pos.x,cy:pos.y,r:"13",fill:col,opacity:"0.12"}));
       // planet dot
-      svgEl.appendChild(E("circle",{cx:pos.x,cy:pos.y,r:"6",fill:col,stroke:"#040410","stroke-width":"1.5"}));
+      svgEl.appendChild(E("circle",{cx:pos.x,cy:pos.y,r:"6",fill:col,stroke:"#ffffff","stroke-width":"1.5"}));
       // planet symbol above dot
       svgEl.appendChild(E("text",{
         x:pos.x, y:pos.y-14,
