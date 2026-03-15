@@ -111,13 +111,13 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  min-width: 440px;
+  min-width: 520px;
 }
 
 .chart-card svg {
   width: 100%;
   height: auto;
-  max-width: 420px;
+  max-width: 500px;
 }
 
 .chart-card h2 {
