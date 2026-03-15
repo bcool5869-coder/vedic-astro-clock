@@ -55,14 +55,26 @@ function getRahuTropLon(date) {
   const T = (getJD(date) - 2451545.0) / 36525.0;
   return norm360(125.04452 - 1934.136261 * T + 0.0020708 * T * T);
 }
+function decToDMS(dec) {
+  const d = Math.floor(dec);
+  const mFull = (dec - d) * 60;
+  const m = Math.floor(mFull);
+  const sFull = (mFull - m) * 60;
+  const s = Math.floor(sFull);
+  const ms = Math.floor((sFull - s) * 1000);
+  return `${d}° ${String(m).padStart(2,'0')}' ${String(s).padStart(2,'0')}" ${String(ms).padStart(3,'0')}`;
+}
+
 function getVedicData(sidLon) {
   const NAK = 360/27, PADA = NAK/4;
   const d1SignIdx = Math.floor(sidLon / 30) % 12;
   const nakIdx    = Math.floor(sidLon / NAK) % 27;
   const padaIdx   = Math.floor((sidLon % NAK) / PADA);
+  const degInSign = sidLon % 30;
   return {
     d1SignIdx, d1Sign: SIGNS[d1SignIdx],
-    deg: (sidLon % 30).toFixed(2),
+    deg: degInSign.toFixed(2),
+    degDMS: decToDMS(degInSign),
     nakIdx, nakName: NAKSHATRAS[nakIdx],
     padaIdx, pada: padaIdx + 1,
     d9SignIdx: (nakIdx * 4 + padaIdx) % 12,
@@ -297,7 +309,7 @@ function updateTable(planets) {
         </div>
       </td>
       <td><span class="sign-badge">${SIGN_SHORT[p.d1SignIdx]} ${p.d1Sign}</span></td>
-      <td class="degrees">${p.deg}°</td>
+      <td class="degrees">${p.degDMS}</td>
       <td class="nakshatra">${p.nakName}</td>
       <td class="pada">${p.pada}</td>
       <td><span class="sign-badge" style="border-color:rgba(124,58,237,0.35);color:#7c3aed">${SIGN_SHORT[p.d9SignIdx]} ${p.d9Sign}</span></td>
