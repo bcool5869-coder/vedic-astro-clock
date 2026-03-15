@@ -49,7 +49,11 @@ function eclipticLon(vec) {
   return norm360(r2d(Math.atan2(ye, vec.x)));
 }
 function getTropLon(body, date) {
-  return eclipticLon(Astronomy.GeoVector(body, date, true));
+  const j2000Lon = eclipticLon(Astronomy.GeoVector(body, date, true));
+  // GeoVector returns J2000 ecliptic; add general precession to get tropical of date
+  const T = (getJD(date) - 2451545.0) / 36525.0;
+  const pA = (5029.097 * T + 1.5585 * T * T) / 3600.0; // degrees
+  return norm360(j2000Lon + pA);
 }
 function getRahuTropLon(date) {
   const T = (getJD(date) - 2451545.0) / 36525.0;
