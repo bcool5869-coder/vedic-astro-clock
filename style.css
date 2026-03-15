@@ -111,7 +111,13 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  min-width: 300px;
+  min-width: 440px;
+}
+
+.chart-card svg {
+  width: 100%;
+  height: auto;
+  max-width: 420px;
 }
 
 .chart-card h2 {
@@ -260,9 +266,9 @@ footer {
   z-index: 1;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 960px) {
   .charts-row { flex-direction: column; align-items: center; }
-  .chart-card { min-width: unset; width: 100%; max-width: 340px; }
+  .chart-card { min-width: unset; width: 100%; max-width: 440px; }
   header h1 { font-size: 1.3rem; }
   .table-card table { font-size: 0.78rem; }
   .table-card thead th, .table-card tbody td { padding: 9px 10px; }
