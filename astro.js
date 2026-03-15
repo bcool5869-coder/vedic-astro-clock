@@ -122,9 +122,7 @@ const R_SO = 220, R_SI = 178;    // sign outer/inner
 const R_NO = 178, R_NI = 134;    // nakshatra outer/inner
 const R_PDO = 134, R_PDI = 118;  // pada ring
 const R_CTR = 44;                // center hole
-const R_LINE_START = 222;        // line starts just outside ring
-const R_LINE_END   = 252;        // line elbow
-const R_LABEL      = 268;        // label placement (base, may shift for overlap)
+const R_LABEL      = 262;        // label placement outside the wheel
 
 const NS = "http://www.w3.org/2000/svg";
 function E(tag, attrs, text) {
@@ -263,26 +261,18 @@ function buildWheel(svgEl, planets, chartType) {
     const col = PLANET_COLORS[item.name] || "#333";
     const abbr = PLANET_ABBR[item.name];
 
-    // Tick on outer ring edge
-    const tick1 = P(R_SO - 4, item.angle);
-    const tick2 = P(R_SO + 4, item.angle);
-    svgEl.appendChild(E("line",{x1:tick1.x,y1:tick1.y,x2:tick2.x,y2:tick2.y,
-      stroke:col,"stroke-width":"1.5"}));
-
-    // Line from ring edge → elbow → label
-    const lineStart = P(R_LINE_START, item.angle);
-    const lineElbow = P(R_LINE_END,   item.labelAngle);
-    const labelPos  = P(R_LABEL,      item.labelAngle);
-
-    svgEl.appendChild(E("polyline",{
-      points:`${lineStart.x},${lineStart.y} ${lineElbow.x},${lineElbow.y} ${labelPos.x},${labelPos.y}`,
-      fill:"none", stroke:col, "stroke-width":"1", opacity:"0.7"
+    // Line from center → label (passes through all rings like the reference)
+    const labelPos = P(R_LABEL, item.labelAngle);
+    svgEl.appendChild(E("line",{
+      x1:CX, y1:CY,
+      x2:labelPos.x, y2:labelPos.y,
+      stroke:col, "stroke-width":"0.8", opacity:"0.5"
     }));
 
-    // Planet abbreviation outside
+    // Planet abbreviation outside the wheel
     svgEl.appendChild(E("text",{
       x:labelPos.x, y:labelPos.y,
-      fill:col, "font-size":"11", "font-weight":"700",
+      fill:col, "font-size":"12", "font-weight":"700",
       "text-anchor":"middle","dominant-baseline":"middle"
     }, abbr + (item.retro?" ℞":"")));
   }
