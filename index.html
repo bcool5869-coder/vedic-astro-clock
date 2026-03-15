@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vedic Astro Clock — Live Transits</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- astronomy-engine: precise planetary ephemeris, no backend needed -->
+  <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1>✦ Vedic <span>Astro</span> Clock ✦</h1>
+    <div id="clock">Loading…</div>
+  </header>
+
+  <main>
+
+    <!-- Two SVG Chart Wheels -->
+    <div class="charts-row">
+
+      <div class="chart-card">
+        <h2>D1 · Rashi Chart</h2>
+        <svg id="wheel-d1" width="300" height="300" viewBox="0 0 300 300"></svg>
+      </div>
+
+      <div class="chart-card">
+        <h2>D9 · Navamsha Chart</h2>
+        <svg id="wheel-d9" width="300" height="300" viewBox="0 0 300 300"></svg>
+      </div>
+
+    </div>
+
+    <!-- Planet Table -->
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Planet</th>
+            <th>D1 Sign</th>
+            <th>Degrees</th>
+            <th>Nakshatra</th>
+            <th>Pada</th>
+            <th>D9 Sign</th>
+          </tr>
+        </thead>
+        <tbody id="planet-tbody">
+          <tr><td colspan="6" style="text-align:center;color:#64748b;padding:24px">Computing planetary positions…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <footer>
+    Sidereal (Lahiri Ayanamsha) · Updates every second · Free &amp; open source
+  </footer>
+
+  <script src="astro.js"></script>
+
+</body>
+</html>
