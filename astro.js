@@ -4,7 +4,7 @@ const SIGNS = [
   "Aries","Taurus","Gemini","Cancer","Leo","Virgo",
   "Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"
 ];
-const SIGN_GLYPHS = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"];
+const SIGN_SHORT = ["Ari","Tau","Gem","Can","Leo","Vir","Lib","Sco","Sag","Cap","Aqu","Pis"];
 const NAKSHATRAS = [
   "Ashwini","Bharani","Krittika","Rohini","Mrigashira","Ardra",
   "Punarvasu","Pushya","Ashlesha","Magha","Purva Phalguni","Uttara Phalguni",
@@ -200,10 +200,13 @@ function buildWheel(svgEl, planets, chartType) {
     const p1=P(R_NI,sa), p2=P(R_SO,sa);
     svgEl.appendChild(E("line",{x1:p1.x,y1:p1.y,x2:p2.x,y2:p2.y,stroke:"#7c3aed","stroke-width":"1.2"}));
 
-    // sign glyph
+    // sign name — rotated to follow the ring arc
     const gp = P((R_SI+R_SO)/2, signMidAngle(i));
-    svgEl.appendChild(E("text",{x:gp.x,y:gp.y,fill:"#5b21b6","font-size":"18",
-      "text-anchor":"middle","dominant-baseline":"middle"}, SIGN_GLYPHS[i]));
+    const rot = signMidAngle(i) + 90; // tangent rotation
+    svgEl.appendChild(E("text",{x:gp.x,y:gp.y,fill:"#5b21b6","font-size":"10","font-weight":"700",
+      "text-anchor":"middle","dominant-baseline":"middle",
+      transform:`rotate(${rot},${gp.x},${gp.y})`
+    }, SIGN_SHORT[i]));
   }
   svgEl.appendChild(E("circle",{cx:CX,cy:CY,r:R_SI,fill:"none",stroke:"#7c3aed","stroke-width":"1.2"}));
 
@@ -293,11 +296,11 @@ function updateTable(planets) {
           ${p.retro?'<span class="retro">℞</span>':""}
         </div>
       </td>
-      <td><span class="sign-badge">${SIGN_GLYPHS[p.d1SignIdx]} ${p.d1Sign}</span></td>
+      <td><span class="sign-badge">${SIGN_SHORT[p.d1SignIdx]} ${p.d1Sign}</span></td>
       <td class="degrees">${p.deg}°</td>
       <td class="nakshatra">${p.nakName}</td>
       <td class="pada">${p.pada}</td>
-      <td><span class="sign-badge" style="border-color:rgba(124,58,237,0.35);color:#7c3aed">${SIGN_GLYPHS[p.d9SignIdx]} ${p.d9Sign}</span></td>
+      <td><span class="sign-badge" style="border-color:rgba(124,58,237,0.35);color:#7c3aed">${SIGN_SHORT[p.d9SignIdx]} ${p.d9Sign}</span></td>
     `;
     tbody.appendChild(tr);
   }
